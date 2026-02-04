@@ -1,218 +1,335 @@
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Zihad Brand - Box Layout Pro</title>
+    <title>𝚉𝙸𝙷𝙰𝙳 𝙱𝚁𝙰𝙽𝙳 𝚅𝙸𝙿 𝙰𝙿𝙿 𝚂𝚃𝙾𝚁</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --sat: env(safe-area-inset-top); --sab: env(safe-area-inset-bottom); }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        
-        body, html { 
-            height: 100%; width: 100%; 
-            background: #000; overflow: hidden; 
-            position: fixed; display: flex; align-items: center; justify-content: center;
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; width: 100%; margin: 0; padding: 0; background: #000; overflow: hidden; font-family: sans-serif; }
+
+        /* হিডেন এডমিন ট্রিগার */
+        #admin-trigger-right { position: fixed; top: 0; right: 0; width: 30px; height: 30px; background: transparent; z-index: 10000; }
+        #admin-trigger-left { position: fixed; top: 0; left: 0; width: 30px; height: 30px; background: transparent; z-index: 10000; }
+
+        /* RGB ফ্রেম */
+        .app-frame {
+            width: 100vw; height: 100vh; background: radial-gradient(circle at center, #020617, #000);
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+            border: 4px solid; animation: screenGlow 3s linear infinite;
         }
 
-        /* গোপন ট্রিগার (কোণায় ডাবল ক্লিক) */
-        #admin-trigger-right { position: fixed; top: 0; right: 0; width: 45px; height: 45px; z-index: 10000; }
-        #admin-trigger-left { position: fixed; top: 0; left: 0; width: 45px; height: 45px; z-index: 10000; }
-
-        /* মেইন কন্টেইনার - বক্স লেআউট */
-        .app-box {
-            width: 95vw; height: 96vh; /* বক্সের শেপ দেওয়ার জন্য কিছুটা কমানো হয়েছে */
-            background: radial-gradient(circle at center, #050510, #000);
-            display: flex; flex-direction: column;
-            position: relative; overflow: hidden;
-            border: 3px solid;
-            border-radius: 20px; /* বক্সের চারকোনা গোল */
-            animation: boxGlow 3s linear infinite;
+        @keyframes screenGlow {
+            0%, 100% { border-color: #ff0000; box-shadow: inset 0 0 20px #ff0000; }
+            50% { border-color: #0000ff; box-shadow: inset 0 0 20px #0000ff; }
         }
 
-        @keyframes boxGlow {
-            0%, 100% { border-color: #ff0000; box-shadow: 0 0 30px rgba(255, 0, 0, 0.4), inset 0 0 20px rgba(255, 0, 0, 0.2); }
-            50% { border-color: #0000ff; box-shadow: 0 0 30px rgba(0, 0, 255, 0.4), inset 0 0 20px rgba(0, 0, 255, 0.2); }
-        }
-
-        /* কন্টেন্ট স্ক্রল */
-        .content-scroll { 
-            flex: 1; overflow-y: auto; 
-            padding: 20px; padding-bottom: 150px; /* সোশ্যাল বারের জন্য গ্যাপ */
-            scrollbar-width: none; 
-        }
-        .content-scroll::-webkit-scrollbar { display: none; }
-
-        /* ঝিলমিল কার্ড ও প্রোফাইল */
-        .jhilmil { 
-            animation: jhilmilAnim 2s linear infinite; 
-            border: 2px solid; 
-        }
+        /* ঝিলমিল কার্ড */
+        .jhilmil { animation: jhilmilAnim 1.5s linear infinite; border: 2px solid; }
         @keyframes jhilmilAnim {
-            0% { border-color: #ff0055; box-shadow: 0 0 10px #ff0055; }
-            50% { border-color: #0088ff; box-shadow: 0 0 10px #0088ff; }
-            100% { border-color: #ff0055; box-shadow: 0 0 10px #ff0055; }
+            0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+            50% { border-color: #0000ff; box-shadow: 0 0 10px #0000ff; }
+            100% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
         }
 
-        /* সোশ্যাল মিডিয়া বার - একটু উপরে উঠানো */
+        .square-card { background: rgba(15, 23, 42, 0.95); margin-bottom: 15px; position: relative; }
+        .content-scroll { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 120px; }
+        ::-webkit-scrollbar { width: 0; }
+
+        /* নতুন এনিমেটেড সোশ্যাল বার */
         .floating-social {
-            position: absolute; 
-            bottom: 60px; /* নিচ থেকে উপরে উঠানো হয়েছে */
-            left: 50%; transform: translateX(-50%);
-            width: 80%; max-width: 260px; 
-            background: rgba(10, 10, 25, 0.8);
-            backdrop-filter: blur(20px); 
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px; 
-            display: flex; justify-content: space-around;
-            padding: 10px; z-index: 5000;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: 70%; max-width: 250px; background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px); border: 1px solid rgba(59, 130, 246, 0.5);
+            border-radius: 50px; display: flex; justify-content: space-around;
+            padding: 10px; z-index: 5000; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* সোশ্যাল বাটন হাইলাইট এনিমেশন */
         .nav-item {
-            position: relative; width: 45px; height: 45px;
+            position: relative; width: 40px; height: 40px;
             display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; font-size: 20px; color: #fff;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .nav-item:active {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.4) translateY(-15px);
-            box-shadow: 0 0 25px currentColor;
+            border-radius: 50%; font-size: 18px; color: #fff;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Modals */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; overflow-y: auto; z-index: 20000; padding: 20px; align-items: center; justify-content: center; }
-        .admin-box { background: #080810; border: 2px solid #3b82f6; padding: 25px; width: 100%; max-width: 350px; border-radius: 15px; }
-        input, textarea { width: 100%; background: #111; border: 1px solid #222; color: #fff; padding: 12px; margin-bottom: 10px; font-size: 13px; outline: none; border-radius: 5px; }
+        /* ক্লিক করলে গোল হাইলাইট এনিমেশন */
+        .nav-item:active {
+            transform: scale(1.4) translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px currentColor;
+        }
+
+        /* বাটনগুলোর পেছনে হালকা পালস ইফেক্ট */
+        .nav-item::after {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            border: 2px solid currentColor; opacity: 0;
+            transition: 0.3s;
+        }
+        .nav-item:active::after {
+            animation: pulseCircle 0.6s ease-out;
+        }
+
+        @keyframes pulseCircle {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Modal Styles */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; overflow-y: auto; align-items: flex-start; justify-content: center; z-index: 20000; padding: 20px; }
+        .admin-box { background: #050505; border: 2px solid #3b82f6; padding: 20px; width: 100%; max-width: 350px; margin-top: 20px; }
+        input, textarea { width: 100%; background: #111; border: 1px solid #333; color: #fff; padding: 8px; margin-bottom: 8px; font-size: 11px; outline: none; }
+        .del-item { display: flex; justify-content: space-between; align-items: center; background: #111; padding: 10px; margin-bottom: 5px; border-left: 3px solid red; }
+        
+        /* Password Modal */
+        .password-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; 
+            justify-content: center; align-items: center; z-index: 30000;
+        }
+        .password-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px; border-radius: 15px; text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px; width: 90%;
+        }
+        .password-input {
+            width: 100%; padding: 12px; margin: 15px 0; border: none; border-radius: 8px;
+            font-size: 16px; text-align: center; background: rgba(255,255,255,0.9);
+        }
+        .password-btn {
+            background: #ff416c; color: white; border: none; padding: 12px 30px;
+            border-radius: 25px; font-weight: bold; cursor: pointer;
+            transition: all 0.3s; margin: 5px;
+        }
+        .password-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        
+        .password-error { color: #ef4444; margin-top: 10px; display: none; }
     </style>
 </head>
 <body onload="loadData()">
 
-    <div id="admin-trigger-right" ondblclick="openModal('admin-modal')"></div>
-    <div id="admin-trigger-left" ondblclick="openModal('delete-modal')"></div>
-
-    <div class="app-box">
-        <div class="content-scroll">
-            <div class="flex flex-col items-center text-center mt-8 mb-8">
-                <div class="w-24 h-24 overflow-hidden bg-black mb-4 jhilmil rounded-full">
-                    <img src="https://via.placeholder.com/150" id="display-logo" class="w-full h-full object-cover">
-                </div>
-                <h1 id="display-name" class="text-2xl font-black text-white uppercase tracking-tighter italic">ZIHAD BRAND</h1>
-                <div class="h-1 w-16 bg-blue-600 mx-auto mt-2 animate-pulse"></div>
+    <!-- Password Protection Modal -->
+    <div id="password-modal" class="password-modal">
+        <div class="password-box">
+            <h2 style="color: white; font-size: 24px; margin-bottom: 20px;">🔒 Admin Access</h2>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">Enter password to access admin panel</p>
+            <input type="password" id="password-input" class="password-input" placeholder="Enter password..." onkeypress="if(event.key==='Enter') checkPassword()">
+            <div>
+                <button onclick="checkPassword()" class="password-btn">🔓 Unlock</button>
+                <button onclick="closePasswordModal()" class="password-btn" style="background: #6b7280;">Cancel</button>
             </div>
-
-            <div class="square-card jhilmil p-4 rounded-xl mb-8">
-                <p id="display-bio" class="text-gray-300 text-xs text-center leading-relaxed">আপনার বায়ো এখানে থাকবে।</p>
-            </div>
-
-            <div id="project-container"></div>
-        </div>
-
-        <div class="floating-social jhilmil">
-            <a id="fb-link" href="#" target="_blank" class="nav-item text-blue-500"><i class="fa-brands fa-facebook-f"></i></a>
-            <a id="wa-link" href="#" target="_blank" class="nav-item text-green-500"><i class="fa-brands fa-whatsapp"></i></a>
-            <a id="tg-link" href="#" target="_blank" class="nav-item text-sky-400"><i class="fa-brands fa-telegram-plane"></i></a>
-            <a href="#" class="nav-item text-pink-500"><i class="fa-brands fa-instagram"></i></a>
+            <p id="password-error" class="password-error">❌ Wrong password!</p>
         </div>
     </div>
 
+    <div id="admin-trigger-right" ondblclick="showPasswordModal('admin-modal')"></div>
+    <div id="admin-trigger-left" ondblclick="showPasswordModal('delete-modal')"></div>
+
     <div id="admin-modal" class="modal">
         <div class="admin-box">
-            <h2 class="text-white font-bold mb-4 text-center uppercase border-b border-blue-900 pb-2">Admin Control</h2>
-            <input type="text" id="logo-input" placeholder="Logo URL">
+            <h2 class="text-white font-bold mb-3 text-center text-xs uppercase border-b border-blue-900 pb-1">Admin Panel</h2>
+            <input type="text" id="logo-input" placeholder="Logo Link (Image URL)">
             <input type="text" id="name-input" placeholder="Name">
-            <textarea id="bio-input" placeholder="Bio..."></textarea>
+            <textarea id="bio-input" placeholder="Bio..." rows="3"></textarea>
             <input type="text" id="fb-in" placeholder="FB Link">
             <input type="text" id="wa-in" placeholder="WA Number">
             <input type="text" id="tg-in" placeholder="Telegram Link">
-            <hr class="my-4 border-gray-800">
-            <input type="text" id="p-img" placeholder="Project Image Link">
+            <hr class="my-3 border-gray-800">
+            <input type="text" id="p-img" placeholder="Project Image Link (URL)">
             <input type="text" id="p-title" placeholder="Project Title">
-            <input type="text" id="p-video" placeholder="Direct Link (3rd Click)">
-            <button onclick="saveAll()" class="w-full bg-blue-700 py-3 font-bold text-white mt-2 rounded">SAVE ALL</button>
-            <button onclick="closeModals()" class="w-full bg-gray-900 py-2 mt-2 text-xs text-white">CLOSE</button>
+            <input type="text" id="p-video" placeholder="Final Link (3rd Click)">
+            <button onclick="saveAll()" class="w-full bg-blue-700 py-3 font-bold text-[10px] text-white mt-2">SAVE DATA</button>
+            <button onclick="closeModals()" class="w-full bg-gray-800 py-2 mt-2 font-bold text-[10px] text-white">CANCEL</button>
         </div>
     </div>
 
     <div id="delete-modal" class="modal">
         <div class="admin-box">
-            <h2 class="text-red-500 font-bold mb-4 text-center border-b border-red-900 pb-2">DELETE PANEL</h2>
-            <div id="delete-list" class="max-h-60 overflow-y-auto mb-4"></div>
-            <button onclick="closeModals()" class="w-full bg-red-900 py-3 font-bold text-white">CLOSE</button>
+            <h2 class="text-red-600 font-bold mb-3 text-center text-xs uppercase">Delete Projects</h2>
+            <div id="delete-list"></div>
+            <button onclick="closeModals()" class="w-full bg-red-900 py-3 mt-4 font-bold text-[10px] text-white">CLOSE</button>
+        </div>
+    </div>
+
+    <div class="app-frame">
+        <div class="content-scroll">
+            <div class="flex flex-col items-center text-center mt-6 mb-6">
+                <div class="w-20 h-20 overflow-hidden bg-black mb-3 jhilmil rounded-full">
+                    <img src="https://via.placeholder.com/150" id="display-logo" class="w-full h-full object-cover">
+                </div>
+                <h1 id="display-name" class="text-xl font-black text-white uppercase">ZIHAD BRAND</h1>
+                <div class="h-0.5 w-12 bg-blue-600 mx-auto mt-2"></div>
+            </div>
+
+            <div class="square-card jhilmil p-3 text-center">
+                <p id="display-bio" class="text-gray-300 text-[10px] italic">আপনার বায়ো এখানে থাকবে।</p>
+            </div>
+
+            <div id="project-container"></div>
+        </div>
+
+        <div class="floating-social">
+            <a id="fb-link" href="#" target="_blank" class="nav-item text-blue-500" onclick="openSocial('facebook')">
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a id="wa-link" href="#" target="_blank" class="nav-item text-green-500" onclick="openSocial('whatsapp')">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <a id="tg-link" href="#" target="_blank" class="nav-item text-sky-400" onclick="openSocial('telegram')">
+                <i class="fa-brands fa-telegram-plane"></i>
+            </a>
+            <a href="#" class="nav-item text-pink-500" onclick="openSocial('instagram')">
+                <i class="fa-brands fa-instagram"></i>
+            </a>
         </div>
     </div>
 
     <script>
         let clickCount = 0;
         const adLink = "https://www.effectivegatecpm.com/wzacd8ppk?key=d5926c0ef7c1dc7212610c458cd5ff37";
+        const CORRECT_PASSWORD = "ZIHAD1234";
 
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; if(id === 'delete-modal') renderDeleteList(); }
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        // Password Protection Functions
+        function showPasswordModal(modalId) {
+            window.targetModal = modalId;
+            document.getElementById('password-modal').style.display = 'flex';
+            document.getElementById('password-input').focus();
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+            if (password === CORRECT_PASSWORD) {
+                document.getElementById('password-modal').style.display = 'none';
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-error').style.display = 'none';
+                openModal(window.targetModal);
+            } else {
+                document.getElementById('password-error').style.display = 'block';
+                document.getElementById('password-input').value = '';
+            }
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').style.display = 'none';
+            document.getElementById('password-input').value = '';
+            document.getElementById('password-error').style.display = 'none';
+        }
+
+        // Social Media Functions (open in new tab for full screen experience)
+        function openSocial(type) {
+            const profile = JSON.parse(localStorage.getItem('z_profile')) || {};
+            let url = '';
+            
+            switch(type) {
+                case 'facebook':
+                    url = profile.fb && profile.fb !== '#' ? profile.fb : 'https://facebook.com';
+                    break;
+                case 'whatsapp':
+                    if (profile.wa) {
+                        url = `https://wa.me/${profile.wa.replace(/\s+/g, '')}`;
+                    } else {
+                        alert('WhatsApp number not configured!');
+                        return;
+                    }
+                    break;
+                case 'telegram':
+                    url = profile.tg && profile.tg !== '#' ? profile.tg : 'https://telegram.org';
+                    break;
+                case 'instagram':
+                    url = 'https://instagram.com';
+                    break;
+            }
+            
+            // Open in new tab for better mobile/full screen experience
+            window.open(url, '_blank');
+        }
+
+        // Existing Functions
+        function openModal(id) { 
+            document.getElementById(id).style.display = 'flex'; 
+            if(id === 'delete-modal') renderDeleteList(); 
+        }
+        
+        function closeModals() { 
+            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
+        }
 
         function handleProjectClick(finalUrl) {
             clickCount++;
-            if (clickCount < 3) { window.open(adLink, '_blank'); } 
-            else { window.open(finalUrl, '_blank'); clickCount = 0; }
+            if (clickCount < 3) {
+                window.open(adLink, '_blank');
+            } else {
+                window.open(finalUrl, '_blank');
+                clickCount = 0;
+            }
         }
 
         function saveAll() {
-            const current = JSON.parse(localStorage.getItem('z_data')) || { profile: {}, projects: [] };
-            const profile = {
-                logo: document.getElementById('logo-input').value || current.profile.logo || "https://via.placeholder.com/150",
-                name: document.getElementById('name-input').value || current.profile.name || "ZIHAD BRAND",
-                bio: document.getElementById('bio-input').value || current.profile.bio || "আপনার বায়ো এখানে থাকবে।",
-                fb: document.getElementById('fb-in').value || current.profile.fb || "#",
-                wa: document.getElementById('wa-in').value || current.profile.wa || "",
-                tg: document.getElementById('tg-in').value || current.profile.tg || "#"
+            const currentProfile = JSON.parse(localStorage.getItem('z_profile')) || {};
+            const data = {
+                logo: document.getElementById('logo-input').value || currentProfile.logo || document.getElementById('display-logo').src,
+                name: document.getElementById('name-input').value || currentProfile.name || document.getElementById('display-name').innerText,
+                bio: document.getElementById('bio-input').value || currentProfile.bio || document.getElementById('display-bio').innerText,
+                fb: document.getElementById('fb-in').value || currentProfile.fb || "#",
+                wa: document.getElementById('wa-in').value || currentProfile.wa || "",
+                tg: document.getElementById('tg-in').value || currentProfile.tg || "#",
+                projects: JSON.parse(localStorage.getItem('z_projects')) || []
             };
+
             if(document.getElementById('p-img').value && document.getElementById('p-title').value) {
-                current.projects.push({ img: document.getElementById('p-img').value, title: document.getElementById('p-title').value, video: document.getElementById('p-video').value });
+                data.projects.push({ 
+                    img: document.getElementById('p-img').value, 
+                    title: document.getElementById('p-title').value, 
+                    video: document.getElementById('p-video').value 
+                });
             }
-            localStorage.setItem('z_data', JSON.stringify({ profile, projects: current.projects }));
+
+            localStorage.setItem('z_profile', JSON.stringify(data));
+            localStorage.setItem('z_projects', JSON.stringify(data.projects));
             location.reload(); 
         }
 
         function loadData() {
-            const data = JSON.parse(localStorage.getItem('z_data'));
-            if(!data) return;
-            document.getElementById('display-logo').src = data.profile.logo;
-            document.getElementById('display-name').innerText = data.profile.name;
-            document.getElementById('display-bio').innerText = data.profile.bio;
-            document.getElementById('fb-link').href = data.profile.fb;
-            document.getElementById('wa-link').href = data.profile.wa ? "https://wa.me/" + data.profile.wa : "#";
-            document.getElementById('tg-link').href = data.profile.tg;
+            const profile = JSON.parse(localStorage.getItem('z_profile'));
+            const projects = JSON.parse(localStorage.getItem('z_projects')) || [];
+
+            if(profile) {
+                document.getElementById('display-logo').src = profile.logo;
+                document.getElementById('display-name').innerText = profile.name;
+                document.getElementById('display-bio').innerText = profile.bio;
+                document.getElementById('fb-link').href = profile.fb;
+                document.getElementById('wa-link').href = profile.wa ? "https://wa.me/" + profile.wa : "#";
+                document.getElementById('tg-link').href = profile.tg;
+            }
 
             const container = document.getElementById('project-container');
             container.innerHTML = "";
-            data.projects.forEach((p) => {
+            projects.forEach((p) => {
                 container.innerHTML += `
-                <div class="square-card !p-0 overflow-hidden jhilmil rounded-2xl mb-6" onclick="handleProjectClick('${p.video || '#'}')">
-                    <img src="${p.img}" class="w-full h-44 object-cover">
-                    <div class="p-3 bg-black/95 flex justify-between items-center">
-                        <h4 class="text-blue-400 font-bold text-[10px] uppercase">${p.title}</h4>
-                        <i class="fa-solid fa-play text-red-600 animate-pulse"></i>
-                    </div>
+                <div class="square-card !p-0 overflow-hidden jhilmil mb-4" onclick="handleProjectClick('${p.video || '#'}')">
+                    <img src="${p.img}" class="w-full h-40 object-cover">
+                    <div class="p-2 bg-black/90"><h4 class="text-blue-400 font-bold text-[9px] uppercase">${p.title}</h4></div>
                 </div>`;
             });
         }
 
         function renderDeleteList() {
-            const data = JSON.parse(localStorage.getItem('z_data')) || { projects: [] };
+            const projects = JSON.parse(localStorage.getItem('z_projects')) || [];
             const list = document.getElementById('delete-list');
             list.innerHTML = "";
-            data.projects.forEach((p, index) => {
-                list.innerHTML += `<div class="flex justify-between items-center bg-gray-900 p-3 rounded mb-2"><span class="text-white text-xs">${p.title}</span><button onclick="deleteProject(${index})" class="bg-red-600 text-[10px] px-3 py-1 rounded">DEL</button></div>`;
+            projects.forEach((p, index) => {
+                list.innerHTML += `<div class="del-item"><span class="text-white text-[10px]">${p.title}</span><button onclick="deleteProject(${index})" class="bg-red-700 text-white text-[8px] px-3 py-1">DELETE</button></div>`;
             });
         }
 
         function deleteProject(index) {
-            let data = JSON.parse(localStorage.getItem('z_data'));
-            data.projects.splice(index, 1);
-            localStorage.setItem('z_data', JSON.stringify(data));
-            renderDeleteList(); loadData();
+            let projects = JSON.parse(localStorage.getItem('z_projects'));
+            projects.splice(index, 1);
+            localStorage.setItem('z_projects', JSON.stringify(projects));
+            renderDeleteList();
+            loadData();
         }
     </script>
 </body>
-</html>
+    </html>
